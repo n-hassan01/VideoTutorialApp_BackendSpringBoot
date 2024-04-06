@@ -5,10 +5,13 @@ package com.app.videoTutorial.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.app.videoTutorial.dao.ResponseInfo;
 import com.app.videoTutorial.dao.SampleCrudDao;
@@ -48,6 +51,124 @@ public class SampleCrudService {
 		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		responseInfo.setMessage("BAD REQUEST");
 		responseInfo.setData(new ArrayList<>());
+
+		return null;
+	}
+
+	public ResponseInfo<Optional<SampleCrud>> getInfo(Integer id) {
+		ResponseInfo<Optional<SampleCrud>> responseInfo = new ResponseInfo<>();
+
+		try {
+			Optional<SampleCrud> response = sampleCrudDao.findById(id);
+
+			responseInfo.setStatusCode(HttpStatus.OK.value());
+			responseInfo.setMessage("Successfully fetched!");
+			responseInfo.setData(response);
+
+			return responseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseInfo.setMessage("BAD REQUEST");
+		responseInfo.setData(Optional.empty());
+
+		return null;
+	}
+
+	public ResponseInfo<String> saveInfo(SampleCrud sampleCrud) {
+		ResponseInfo<String> responseInfo = new ResponseInfo<>();
+
+		try {
+			sampleCrudDao.save(sampleCrud);
+
+			responseInfo.setStatusCode(HttpStatus.OK.value());
+			responseInfo.setMessage("Successfully added!");
+			responseInfo.setData(HttpStatus.OK.name());
+
+			return responseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseInfo.setMessage("BAD REQUEST");
+		responseInfo.setData(HttpStatus.BAD_REQUEST.name());
+
+		return null;
+	}
+
+	public ResponseInfo<String> deleteInfo(Integer id) {
+		ResponseInfo<String> responseInfo = new ResponseInfo<>();
+
+		try {
+			sampleCrudDao.deleteById(id);
+
+			responseInfo.setStatusCode(HttpStatus.OK.value());
+			responseInfo.setMessage("Successfully deleted id: " + id);
+			responseInfo.setData(HttpStatus.OK.name());
+
+			return responseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseInfo.setMessage("BAD REQUEST");
+		responseInfo.setData(HttpStatus.BAD_REQUEST.name());
+
+		return null;
+	}
+
+	public ResponseInfo<String> deleteAllInfos() {
+		ResponseInfo<String> responseInfo = new ResponseInfo<>();
+
+		try {
+			sampleCrudDao.deleteAll();
+
+			responseInfo.setStatusCode(HttpStatus.OK.value());
+			responseInfo.setMessage("Successfully truncated");
+			responseInfo.setData(HttpStatus.OK.name());
+
+			return responseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseInfo.setMessage("BAD REQUEST");
+		responseInfo.setData(HttpStatus.BAD_REQUEST.name());
+
+		return null;
+	}
+
+	/**
+	 * using @Transactional annotation
+	 * Spring will automatically start and manage a
+	 * transaction for the duration of the method execution. This will resolve the
+	 * TransactionRequiredException when executing modifying queries.
+	 */
+	@Transactional
+	public ResponseInfo<String> updateInfo(SampleCrud sampleCrud) {
+		ResponseInfo<String> responseInfo = new ResponseInfo<>();
+
+		try {
+			sampleCrudDao.updateInfoById(sampleCrud.getName(), sampleCrud.getProfession(), sampleCrud.getAge(),
+					sampleCrud.getId());
+
+			responseInfo.setStatusCode(HttpStatus.OK.value());
+			responseInfo.setMessage("Successfully updated");
+			responseInfo.setData(HttpStatus.OK.name());
+
+			return responseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseInfo.setMessage("BAD REQUEST");
+		responseInfo.setData(HttpStatus.BAD_REQUEST.name());
 
 		return null;
 	}
