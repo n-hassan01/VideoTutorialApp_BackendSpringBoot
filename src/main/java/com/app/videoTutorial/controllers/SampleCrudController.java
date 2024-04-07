@@ -46,6 +46,11 @@ public class SampleCrudController {
 		return sampleCrudService.getInfo(id);
 	}
 
+	@GetMapping("/byName/{name}")
+	public ResponseInfo<List<SampleCrud>> getByNameMethod(@PathVariable String name) {
+		return sampleCrudService.getInfoByName(name);
+	}
+
 	@PostMapping("add")
 	public ResponseInfo<String> postMethod(@RequestBody SampleCrud sampleCrud) {
 		return sampleCrudService.saveInfo(sampleCrud);

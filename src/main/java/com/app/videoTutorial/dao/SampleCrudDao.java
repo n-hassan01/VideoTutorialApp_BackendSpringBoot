@@ -3,6 +3,8 @@
  */
 package com.app.videoTutorial.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +22,8 @@ import com.app.videoTutorial.model.SampleCrud;
  * APIs
  */
 public interface SampleCrudDao extends JpaRepository<SampleCrud, Integer> {
+	
+	List<SampleCrud> findByName(String name);
 
 	@Modifying
 	@Query("update SampleCrud sc set sc.name = ?1, sc.profession = ?2, sc.age = ?3 where sc.id = ?4")
