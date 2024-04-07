@@ -77,6 +77,28 @@ public class SampleCrudService {
 		return null;
 	}
 
+	public ResponseInfo<List<SampleCrud>> getInfoByName(String name) {
+		ResponseInfo<List<SampleCrud>> responseInfo = new ResponseInfo<>();
+
+		try {
+			List<SampleCrud> response = sampleCrudDao.findByName(name);
+
+			responseInfo.setStatusCode(HttpStatus.OK.value());
+			responseInfo.setMessage("Successfully fetched!");
+			responseInfo.setData(response);
+
+			return responseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		responseInfo.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseInfo.setMessage("BAD REQUEST");
+		responseInfo.setData(new ArrayList<>());
+
+		return null;
+	}
+
 	public ResponseInfo<String> saveInfo(SampleCrud sampleCrud) {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
@@ -144,8 +166,7 @@ public class SampleCrudService {
 	}
 
 	/**
-	 * using @Transactional annotation
-	 * Spring will automatically start and manage a
+	 * using @Transactional annotation Spring will automatically start and manage a
 	 * transaction for the duration of the method execution. This will resolve the
 	 * TransactionRequiredException when executing modifying queries.
 	 */
