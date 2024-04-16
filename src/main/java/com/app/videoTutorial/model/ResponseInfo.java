@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.app.videoTutorial.dao;
+package com.app.videoTutorial.model;
 
 /**
  * author: Naimul Hassan
