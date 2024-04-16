@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.videoTutorial.dao.ResponseInfo;
 import com.app.videoTutorial.dao.SampleCrudDao;
+import com.app.videoTutorial.model.ResponseInfo;
 import com.app.videoTutorial.model.SampleCrud;
 
 /**
