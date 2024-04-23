@@ -8,36 +8,36 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.videoTutorial.dao.SampleCrudDao;
+
+import com.app.videoTutorial.dao.StudentCrudDao;
 import com.app.videoTutorial.model.ResponseInfo;
-import com.app.videoTutorial.model.SampleCrud;
+import com.app.videoTutorial.model.Students;
 
 /**
- * author: Naimul Hassan
- * date: 4/1/2024
+ * author: Ahmed Raihan Alif
+ * date: 4/22/2024
  */
 /**
  * this is the service class for the API to perform crud operation for
- * sample_crud table all the data processing according to request will be
+ * students table all the data processing according to request will be
  * performed in this class is responsible for return response this service class
  * will act like template for all APIs
  */
 
 @Component
-public class SampleCrudService {
+public class StudentCrudService {
 	@Autowired
-	SampleCrudDao sampleCrudDao;
+	StudentCrudDao studentCrudDao;
 
-	public ResponseInfo<List<SampleCrud>> getAllInfos() {
-		ResponseInfo<List<SampleCrud>> responseInfo = new ResponseInfo<>();
+	public ResponseInfo<List<Students>> getAllInfos() {
+		ResponseInfo<List<Students>> responseInfo = new ResponseInfo<>();
 
 		try {
-			List<SampleCrud> response = sampleCrudDao.findAll();
+			List<Students> response = studentCrudDao.findAll();
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully fetched!");
@@ -55,11 +55,11 @@ public class SampleCrudService {
 		return null;
 	}
 
-	public ResponseInfo<Optional<SampleCrud>> getInfo(Integer id) {
-		ResponseInfo<Optional<SampleCrud>> responseInfo = new ResponseInfo<>();
+	public ResponseInfo<Optional<Students>> getInfo(Integer id) {
+		ResponseInfo<Optional<Students>> responseInfo = new ResponseInfo<>();
 
 		try {
-			Optional<SampleCrud> response = sampleCrudDao.findById(id);
+			Optional<Students> response = studentCrudDao.findById(id);
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully fetched!");
@@ -77,11 +77,11 @@ public class SampleCrudService {
 		return null;
 	}
 
-	public ResponseInfo<String> saveInfo(SampleCrud sampleCrud) {
+	public ResponseInfo<String> saveInfo(Students studentCrud) {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			sampleCrudDao.save(sampleCrud);
+			studentCrudDao.save(studentCrud);
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully added!");
@@ -103,7 +103,7 @@ public class SampleCrudService {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			sampleCrudDao.deleteById(id);
+			studentCrudDao.deleteById(id);
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully deleted id: " + id);
@@ -125,7 +125,7 @@ public class SampleCrudService {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			sampleCrudDao.deleteAll();
+			studentCrudDao.deleteAll();
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully truncated");
@@ -150,12 +150,12 @@ public class SampleCrudService {
 	 * TransactionRequiredException when executing modifying queries.
 	 */
 	@Transactional
-	public ResponseInfo<String> updateInfo(SampleCrud sampleCrud) {
+	public ResponseInfo<String> updateInfo(Students studentCrud) {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			sampleCrudDao.updateInfoById(sampleCrud.getName(), sampleCrud.getProfession(), sampleCrud.getAge(),
-					sampleCrud.getId());
+			studentCrudDao.updateInfoById(studentCrud.getFull_name(), studentCrud.getAddress(), studentCrud.getAge(),
+					studentCrud.getInstitute(),studentCrud.getClass_level(),studentCrud.getId());
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully updated");

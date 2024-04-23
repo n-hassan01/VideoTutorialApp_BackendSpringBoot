@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.app.videoTutorial.controllers;
 
 import java.util.List;
@@ -17,53 +14,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.videoTutorial.model.ResponseInfo;
-import com.app.videoTutorial.model.SampleCrud;
-import com.app.videoTutorial.services.SampleCrudService;
-
-/**
- * author: Naimul Hassan
- * date: 4/1/2024
- */
-/**
- * this is the entry point for the API to perform crud operation for sample_crud
- * table this controller will act like template for all APIs
- */
+import com.app.videoTutorial.model.Students;
+import com.app.videoTutorial.services.StudentCrudService;
 
 @RestController
-@RequestMapping("sampleCrud")
-public class SampleCrudController {
-
+@RequestMapping("studentCrud")
+public class StudentsCrudController {
 	@Autowired
-	SampleCrudService sampleCrudService;
+	StudentCrudService studentCrudService;
 
 	@GetMapping("all")
-	public ResponseInfo<List<SampleCrud>> getAllMethod() {
-		return sampleCrudService.getAllInfos();
+	public ResponseInfo<List<Students>> getAllMethod() {
+		return studentCrudService.getAllInfos();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseInfo<Optional<SampleCrud>> getMethod(@PathVariable Integer id) {
-		return sampleCrudService.getInfo(id);
+	public ResponseInfo<Optional<Students>> getMethod(@PathVariable Integer id) {
+		return studentCrudService.getInfo(id);
 	}
 
 	@PostMapping("add")
-	public ResponseInfo<String> postMethod(@RequestBody SampleCrud sampleCrud) {
-		return sampleCrudService.saveInfo(sampleCrud);
+	public ResponseInfo<String> postMethod(@RequestBody Students studentCrud) {
+		return studentCrudService.saveInfo(studentCrud);
 	}
 
 	@DeleteMapping("delete/{id}")
 	public ResponseInfo<String> deleteMethod(@PathVariable Integer id) {
-		return sampleCrudService.deleteInfo(id);
+		return studentCrudService.deleteInfo(id);
 	}
 
 	@DeleteMapping("delete/all")
 	public ResponseInfo<String> deleteAllMethod() {
-		return sampleCrudService.deleteAllInfos();
+		return studentCrudService.deleteAllInfos();
 	}
 
 	@PutMapping("update")
-	public ResponseInfo<String> updateMethod(@RequestBody SampleCrud sampleCrud) {
-		return sampleCrudService.updateInfo(sampleCrud);
+	public ResponseInfo<String> updateMethod(@RequestBody Students studentCrud) {
+		return studentCrudService.updateInfo(studentCrud);
 	}
+	
+	
 
 }
