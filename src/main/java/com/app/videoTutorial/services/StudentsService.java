@@ -12,8 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.app.videoTutorial.dao.StudentCrudDao;
+import com.app.videoTutorial.dao.StudentsDao;
 import com.app.videoTutorial.model.ResponseInfo;
 import com.app.videoTutorial.model.Students;
 
@@ -22,22 +21,23 @@ import com.app.videoTutorial.model.Students;
  * date: 4/22/2024
  */
 /**
- * this is the service class for the API to perform crud operation for
- * students table all the data processing according to request will be
- * performed in this class is responsible for return response this service class
- * will act like template for all APIs
+ * this is the service class for the API to perform crud operation for students
+ * table all the data processing according to request will be performed in this
+ * class is responsible for return response this service class will act like
+ * template for all APIs
  */
 
 @Component
-public class StudentCrudService {
+public class StudentsService {
+
 	@Autowired
-	StudentCrudDao studentCrudDao;
+	StudentsDao studentsDao;
 
 	public ResponseInfo<List<Students>> getAllInfos() {
 		ResponseInfo<List<Students>> responseInfo = new ResponseInfo<>();
 
 		try {
-			List<Students> response = studentCrudDao.findAll();
+			List<Students> response = studentsDao.findAll();
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully fetched!");
@@ -59,7 +59,7 @@ public class StudentCrudService {
 		ResponseInfo<Optional<Students>> responseInfo = new ResponseInfo<>();
 
 		try {
-			Optional<Students> response = studentCrudDao.findById(id);
+			Optional<Students> response = studentsDao.findById(id);
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully fetched!");
@@ -77,11 +77,11 @@ public class StudentCrudService {
 		return null;
 	}
 
-	public ResponseInfo<String> saveInfo(Students studentCrud) {
+	public ResponseInfo<String> saveInfo(Students studentInfo) {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			studentCrudDao.save(studentCrud);
+			studentsDao.save(studentInfo);
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully added!");
@@ -103,7 +103,7 @@ public class StudentCrudService {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			studentCrudDao.deleteById(id);
+			studentsDao.deleteById(id);
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully deleted id: " + id);
@@ -125,7 +125,7 @@ public class StudentCrudService {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			studentCrudDao.deleteAll();
+			studentsDao.deleteAll();
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully truncated");
@@ -144,18 +144,17 @@ public class StudentCrudService {
 	}
 
 	/**
-	 * using @Transactional annotation
-	 * Spring will automatically start and manage a
+	 * using @Transactional annotation Spring will automatically start and manage a
 	 * transaction for the duration of the method execution. This will resolve the
 	 * TransactionRequiredException when executing modifying queries.
 	 */
 	@Transactional
-	public ResponseInfo<String> updateInfo(Students studentCrud) {
+	public ResponseInfo<String> updateInfo(Students studentInfo) {
 		ResponseInfo<String> responseInfo = new ResponseInfo<>();
 
 		try {
-			studentCrudDao.updateInfoById(studentCrud.getFull_name(), studentCrud.getAddress(), studentCrud.getAge(),
-					studentCrud.getInstitute(),studentCrud.getClass_level(),studentCrud.getId());
+			studentsDao.updateInfoById(studentInfo.getFullName(), studentInfo.getAddress(), studentInfo.getAge(),
+					studentInfo.getInstitute(), studentInfo.getClassLevel(), studentInfo.getId());
 
 			responseInfo.setStatusCode(HttpStatus.OK.value());
 			responseInfo.setMessage("Successfully updated");

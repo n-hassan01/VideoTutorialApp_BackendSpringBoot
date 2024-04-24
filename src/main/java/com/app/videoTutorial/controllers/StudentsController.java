@@ -15,44 +15,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.videoTutorial.model.ResponseInfo;
 import com.app.videoTutorial.model.Students;
-import com.app.videoTutorial.services.StudentCrudService;
+import com.app.videoTutorial.services.StudentsService;
 
 @RestController
-@RequestMapping("studentCrud")
-public class StudentsCrudController {
+@RequestMapping("students")
+public class StudentsController {
 	@Autowired
-	StudentCrudService studentCrudService;
+	StudentsService studentsService;
 
 	@GetMapping("all")
 	public ResponseInfo<List<Students>> getAllMethod() {
-		return studentCrudService.getAllInfos();
+		return studentsService.getAllInfos();
 	}
 
 	@GetMapping("/{id}")
 	public ResponseInfo<Optional<Students>> getMethod(@PathVariable Integer id) {
-		return studentCrudService.getInfo(id);
+		return studentsService.getInfo(id);
 	}
 
 	@PostMapping("add")
 	public ResponseInfo<String> postMethod(@RequestBody Students studentCrud) {
-		return studentCrudService.saveInfo(studentCrud);
+		return studentsService.saveInfo(studentCrud);
 	}
 
 	@DeleteMapping("delete/{id}")
 	public ResponseInfo<String> deleteMethod(@PathVariable Integer id) {
-		return studentCrudService.deleteInfo(id);
+		return studentsService.deleteInfo(id);
 	}
 
 	@DeleteMapping("delete/all")
 	public ResponseInfo<String> deleteAllMethod() {
-		return studentCrudService.deleteAllInfos();
+		return studentsService.deleteAllInfos();
 	}
 
 	@PutMapping("update")
 	public ResponseInfo<String> updateMethod(@RequestBody Students studentCrud) {
-		return studentCrudService.updateInfo(studentCrud);
+		return studentsService.updateInfo(studentCrud);
 	}
-	
-	
 
 }
